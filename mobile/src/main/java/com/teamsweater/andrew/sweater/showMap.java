@@ -17,13 +17,44 @@ public class showMap extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_map2);
         Intent intent = getIntent();
+        LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5,250,mLocationListener);
     }
 
-    public Location getLocation(){
-        double latitude,longitude;
-        locationManager.
-
+    public Location getLocation() {
+        double latitude, longitude;
+        Location location = null;
+        if (locationManager != null) {
+            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+            }
+        }
+        return location;
     }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(final Location location) {
+            //your code here
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
